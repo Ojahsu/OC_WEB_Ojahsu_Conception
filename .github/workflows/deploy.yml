@@ -3,8 +3,8 @@ name: Deploy Angular to VPS
 on:
   push:
     branches:
-      - master  # Change "main" si ta branche principale a un autre nom
-
+      - master
+      
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i deploy_key vpsuser@$VPS_IP << 'EOF'
             rm -rf /var/www/mon-site/*
           EOF
-          scp -i deploy_key -r dist/mon-projet/* vpsuser@$VPS_IP:/var/www/mon-site/
+          scp -i deploy_key -r dist/ojahsu-conception-web/* vpsuser@$VPS_IP:/var/www/OC_WEB_Ojahsu_Conception/
           ssh -i deploy_key vpsuser@$VPS_IP << 'EOF'
             sudo systemctl restart nginx
           EOF
