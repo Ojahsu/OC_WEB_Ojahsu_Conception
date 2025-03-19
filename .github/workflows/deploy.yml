@@ -1,0 +1,40 @@
+name: Deploy Angular to VPS
+
+on:
+  push:
+    branches:
+      - main  # Change "main" si ta branche principale a un autre nom
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production  # Utilise l'Environment Secret que tu as créé
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Angular App
+        run: npm run build -- --configuration=production
+
+      - name: Deploy to VPS
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          VPS_IP: ${{ secrets.VPS_IP }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > deploy_key && chmod 600 deploy_key
+          ssh -o StrictHostKeyChecking=no -i deploy_key vpsuser@$VPS_IP << 'EOF'
+            rm -rf /var/www/mon-site/*
+          EOF
+          scp -i deploy_key -r dist/mon-projet/* vpsuser@$VPS_IP:/var/www/mon-site/
+          ssh -i deploy_key vpsuser@$VPS_IP << 'EOF'
+            sudo systemctl restart nginx
+          EOF
