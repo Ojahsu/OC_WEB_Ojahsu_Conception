@@ -3,12 +3,11 @@ name: Deploy Angular to VPS
 on:
   push:
     branches:
-      - main  # Change "main" si ta branche principale a un autre nom
+      - master  # Change "main" si ta branche principale a un autre nom
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: production  # Utilise l'Environment Secret que tu as créé
 
     steps:
       - name: Checkout Repository
