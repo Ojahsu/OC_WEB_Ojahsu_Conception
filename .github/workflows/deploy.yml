@@ -31,7 +31,7 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > deploy_key && chmod 600 deploy_key
           ssh -o StrictHostKeyChecking=no -i deploy_key vpsuser@$VPS_IP << 'EOF'
-            rm -rf /var/www/mon-site/*
+            rm -rf /var/www/OC_WEB_Ojahsu_Conception/*
           EOF
           scp -i deploy_key -r dist/ojahsu-conception-web/* vpsuser@$VPS_IP:/var/www/OC_WEB_Ojahsu_Conception/
           ssh -i deploy_key vpsuser@$VPS_IP << 'EOF'
