@@ -1,0 +1,32 @@
+.header{
+    display:grid;
+    grid-template-columns: 1fr calc(206px + 5rem) 1fr;
+    background-color: #f1f1f1;
+    color: #19ae52;
+    padding: 10px;
+
+    .gauche, .droite{
+        font-size: 25px;
+        font-weight: 500;
+        align-content: center;
+        margin-bottom: 3px;
+        padding: 0.5rem;
+        border: #55dc83 solid 3px;
+        width: fit-content;
+        height: fit-content;
+        border-radius: 5px;
+        align-self: center;
+    }
+
+    .gauche{
+        justify-self: end;
+    }
+
+    .centre{
+        justify-self: center;
+    }
+
+    .droite{
+        justify-self: start;
+    }
+}
